@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SpecialtySelector.Models.SubDepartment.SubDepartmentInfo>
+
+@{
+    ViewBag.Title = "Поднаправления";
+}
+
+@if (Model.Count() != 0)
+{
+    foreach (var sbDep in Model)
+    {
+        <div class="jumbotron text-center lead text-success mt-20">
+            <h1 style="word-wrap: break-word">@sbDep.Name</h1>
+            @if (sbDep.Description.Length < 200)
+            {
+                <h3 style="word-wrap: break-word">@sbDep.Description</h3>
+            }
+            else
+            {
+                <h3 style="word-wrap: break-word">@sbDep.Description.Substring(0, 200)...</h3>
+            }
+            <p>
+                <a class="btn btn-info" href="\">Назад</a>
+                <a class="btn btn-info" href="/SubDepartment/Details/@sbDep.Id">Виж повече</a>
+                <a class="btn btn-info" href="/Specialty/SpecialtyInfo/@sbDep.Id">Виж специалности</a>
+                @{if (Request.IsAuthenticated)
+                  {
+                      <div class="row">
+                          <div class="col-md-6 text-right">
+                              @using (Html.BeginForm("Delete", "SubDepartment", new { Id = sbDep.Id }, FormMethod.Post))
+                              {
+                                  <input class="btn btn-danger" type="submit" value="Изтриване" />
+                              }
+                          </div>
+                          <div class="col-md-6 text-left">
+                              @using (Html.BeginForm("Update", "SubDepartment", new { Id = sbDep.Id }, FormMethod.Get))
+                              {
+                                  <input class="btn btn-success" type="submit" value="Редактирай" />
+                              }
+                          </div>
+                      </div>
+                  }
+                }
+            </p>
+        </div>
+    }
+}
+else
+{
+    <h1 class="text-center lead">Все още няма добавени поднаправления къ съответното направление ....</h1>
+}

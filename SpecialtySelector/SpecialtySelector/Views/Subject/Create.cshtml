@@ -1,0 +1,68 @@
+﻿@model SpecialtySelector.Models.Subjects.CreateSubject
+
+@using (Html.BeginForm("Create", "Subject", FormMethod.Post))
+{
+    <div class="text-center">
+        <p class="lead">Име на предмет:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Задължителен:</p>
+        @Html.CheckBoxFor(x => x.IsMandatory)
+      
+        <p class="lead">Кредити:</p>
+        <div>
+            @Html.TextBoxFor(m => m.Credits, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Курс:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Course, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Course, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Кратко описание на предмета:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Description, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { rows = "7", cols = "1200" })
+        </div>
+        <p class="lead">Връзка със специалност:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.SpecialtyId, "", new { style = "color:red" })
+        </div>
+      
+        <div>
+            @{
+                var specialtiesList = new HashSet<SelectListItem>();
+                foreach (var sp in ViewBag.Specialties)
+                {
+                    specialtiesList.Add(new SelectListItem { Text = string.Format((string)"{0}", (object)sp.Name), Value = string.Format((string)"{0}", (object)sp.Id), Selected = false });
+                }
+            }
+            @Html.ListBoxFor(m => m.SpecialtyId, specialtiesList)
+        </div>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.TeacherId, "", new { style = "color:red" })
+        </div>
+        <div>
+            @{
+                var teacherList = new HashSet<SelectListItem>();
+                foreach (var t in ViewBag.Teachers)
+                {
+                    teacherList.Add(new SelectListItem { Text = string.Format((string)"{0}", (object)t.FirstName), Value = string.Format((string)"{0}", (object)t.Id), Selected = false });
+                }
+            }
+            @Html.ListBoxFor(m => m.TeacherId, teacherList)
+        </div>
+
+        <br />
+        <div>
+            <input type="submit" value="Добави предмет" />
+        </div>
+    </div>
+                }

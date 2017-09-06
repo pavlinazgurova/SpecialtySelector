@@ -1,0 +1,16 @@
+﻿@model SpecialtySelector.Models.SubDepartment.SubDepartmentInfo
+
+@{
+    ViewBag.Title = "Детайли";
+}
+<div class="jumbotron text-center lead">
+    <div style="word-wrap: break-word">
+        <h1>@Model.Name</h1>
+    </div>
+    <div style="word-wrap: break-word">
+        <p class="lead">@Model.Description</p>
+    </div>
+    <p>
+        <a class="btn btn-info" href="/SubDepartment/SubDepartmentInfo/@Model.Id">Назад към поднаправленията</a>
+    </p>
+</div>

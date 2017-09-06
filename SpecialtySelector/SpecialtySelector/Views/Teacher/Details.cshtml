@@ -1,0 +1,37 @@
+﻿@model  SpecialtySelector.Models.Teachers.TeacherInfo
+@using SpecialtySelector.Data.SpecialtySelectorEnums
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+
+@{
+    ViewBag.Title = "Детайли";
+}
+
+<div class="jumbotron text-center lead">
+    <div style="word-wrap: break-word">
+        @{ 
+            var modelDegree = Model.Degree;
+            var displayDegree = modelDegree
+                .GetType()
+                .GetMember(Model.Degree.ToString())
+                .FirstOrDefault()
+                .GetCustomAttribute<DisplayAttribute>()
+                .GetName();
+
+            var modelAcademicTitle = Model.AcademicTitle;
+            var displayAcademicTitle = modelAcademicTitle
+                .GetType()
+                .GetMember(Model.AcademicTitle.ToString())
+                .FirstOrDefault()
+                .GetCustomAttribute<DisplayAttribute>()
+                .GetName();
+        }
+        <h1>@displayAcademicTitle @displayDegree  @Model.FirstName @Model.SecondName @Model.LastName</h1>
+    </div>
+    <div style="word-wrap: break-word">
+        <p class="lead">@Model.TeacherInformation</p>
+    </div>    
+    <p>
+        <a class="btn btn-info" href="/Teacher/TeacherInfo/@Model.Id">Назад към преметите</a>
+    </p>
+</div>

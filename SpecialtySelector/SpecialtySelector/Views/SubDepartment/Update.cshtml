@@ -1,0 +1,40 @@
+﻿@using SpecialtySelector.Data
+@model SpecialtySelector.Models.SubDepartment.UpdateSubDepartment
+
+@using (Html.BeginForm("Update", "SubDepartment", FormMethod.Post))
+{
+    <div class="row text-center">
+        <p class="lead">Име на поднаправлението:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Описание на поднаправлението:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Description, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { rows = "10", cols = "1200" })
+        </div>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.DepartmentId, "", new { style = "color:red" })
+        </div>
+        <div>
+            @{
+                var options = new HashSet<SelectListItem>();
+                var db = new SpecialtySelectorDbContext();
+                var departments = db.Departments.ToList();
+                foreach (var department in departments)
+                {
+                    options.Add(new SelectListItem { Text = $"{department.Name}", Value = $"{department.Id}", Selected = false });
+                }
+            }
+            @Html.DropDownListFor(m => m.DepartmentId, options)
+        </div>
+        <div>
+            <input class="btn btn-success" type="submit" value="Обнови" />
+        </div>
+    </div>
+                }

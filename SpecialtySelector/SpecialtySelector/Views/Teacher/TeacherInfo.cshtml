@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SpecialtySelector.Models.Teachers.TeacherInfo>
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+
+@{
+    ViewBag.Title = "Детайли";
+}
+
+@if (Model.Count() != 0)
+{
+    foreach (var t in Model)
+    {
+        <div class="jumbotron text-center lead text-success mt-20">
+            @{
+                var modelDegree = t.Degree;
+                var displayDegree = modelDegree
+                    .GetType()
+                    .GetMember(t.Degree.ToString())
+                    .FirstOrDefault()
+                    .GetCustomAttribute<DisplayAttribute>()
+                    .GetName();
+
+                var modelAcademicTitle = t.AcademicTitle;
+                var displayAcademicTitle = modelAcademicTitle
+                    .GetType()
+                    .GetMember(t.AcademicTitle.ToString())
+                    .FirstOrDefault()
+                    .GetCustomAttribute<DisplayAttribute>()
+                    .GetName();
+            }
+            <h1 style="word-wrap: break-word">@displayAcademicTitle @displayDegree @t.FirstName @t.LastName</h1>
+            @if (t.TeacherInformation.Length < 200)
+            {
+                <h3 style="word-wrap: break-word">@t.TeacherInformation</h3>
+            }
+            else
+            {
+                <h3 style="word-wrap: break-word">@t.TeacherInformation.Substring(0, 200)...</h3>
+            } 
+            <p>
+                <a class="btn btn-info" href="\">Назад</a>
+                <a class="btn btn-info" href="/Teacher/Details/@t.Id">Виж повече</a>
+                <a class="btn btn-info" href="/Subject/SubjectInfo/@t.Id">Виж предмети</a>
+                @{if (Request.IsAuthenticated)
+                    {
+                        <div class="row">
+                            <div class="col-md-6 text-right">
+                                @using (Html.BeginForm("Delete", "Techaer", new { Id = t.Id }, FormMethod.Post))
+                                {
+                                    <input class="btn btn-danger" type="submit" value="Изтриване" />
+                                }
+                            </div>
+                            <div class="col-md-6 text-left">
+                                @using (Html.BeginForm("Update", "Teacher", new { Id = t.Id }, FormMethod.Get))
+                                {
+                                    <input class="btn btn-success" type="submit" value="Редактирай" />
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </p>
+        </div>
+                        }
+                    }
+                    else
+                    {
+                        <h1 class="text-center lead">Все още няма добавени преподаватели към съотвената специалност ....</h1>
+                    }

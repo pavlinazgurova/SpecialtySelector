@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SpecialtySelector.Models.Specialties.AllSpecialties>
+
+@foreach (var s in Model)
+{
+    <div class="jumbotron text-center">
+        <h2 class="lead text-info">
+            Име на поднаправлението: @s.SubDepartmentName
+        </h2>
+        <h3 class="lead">
+            Име на специалността: @s.Name
+        </h3>
+        <p class="lead">
+        Образователна квалификационна степен: @s.Eqd
+        </p>
+        <p class="lead">
+        Форма на обучение: @s.FormOfEducation
+        </p>
+        <div>
+            <div class="lead">@s.Description</div>
+        </div>
+        @{if (Request.IsAuthenticated)
+            {
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        @using (Html.BeginForm("Delete", "Specialty", new { Id = s.Id }, FormMethod.Post))
+                        {
+                            <input class="btn btn-danger" type="submit" value="Изтриване" />
+                        }                        
+                    </div>
+                    <div class="col-md-6 text-left">
+                        @using (Html.BeginForm("Update", "Specialty", new { Id = s.Id }, FormMethod.Get))
+                        {
+                            <input class="btn btn-success" type="submit" value="Редактирай" />
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <hr />
+            }

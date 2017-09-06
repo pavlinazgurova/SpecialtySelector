@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SpecialtySelector.Models.Departments.HomeIndexDepartmentsModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@foreach (var dep in Model.OrderBy(x => x.Id))
+{
+    <div class="row jumbotron text-center lead text-success mt-20">
+        <div class="col-md-12">
+            <h1 style="word-wrap: break-word">@dep.Name</h1>
+            <hr />
+            @if (dep.Description.Length < 200)
+            {
+                <h3 style="word-wrap: break-word">@dep.Description</h3>
+            }
+            else
+            {
+                <h3 style="word-wrap: break-word">@dep.Description.Substring(0, 200)...</h3>
+            }
+            <div class="row">
+                <a class="btn btn-info" href="/Department/Details/@dep.Id">Виж повече</a>
+                <a class="btn btn-info" href="/SubDepartment/SubDepartmentInfo/@dep.Id">Виж поднаправленията</a>
+                <br />
+                <br />
+                @{if (Request.IsAuthenticated)
+                    {
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            @using (Html.BeginForm("Delete", "Department", new { Id = dep.Id }, FormMethod.Post))
+                                {
+                                <input class="btn btn-danger" type="submit" value="Изтриване" />
+                                }
+                        </div>
+                        <div class="col-md-6 text-left">
+                            @using (Html.BeginForm("Update", "Department", new { Id = dep.Id }, FormMethod.Get))
+                                {
+                                <input class="btn btn-success" type="submit" value="Редактирай" />
+                                }
+                        </div>
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

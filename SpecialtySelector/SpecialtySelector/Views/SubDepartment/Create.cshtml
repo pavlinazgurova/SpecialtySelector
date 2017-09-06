@@ -1,0 +1,42 @@
+﻿@model SpecialtySelector.Models.SubDepartment.CreateSubDepartment
+
+@{
+    ViewBag.Title = "Add Sub Department";
+}
+
+@using (Html.BeginForm("Create", "SubDepartment", FormMethod.Post))
+{
+    <div class="row text-center">
+        <p class="lead">Име на поднаправлението:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Описание на поднарпавлението:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Description, "", new { style = "color:red" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { rows = "10", cols = "1200" })
+        </div>
+        <p class="lead">Връзка с направление :</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.DepartmentId, "", new { style = "color:red" })
+        </div>
+        <div>
+            @{
+                var departmentsList = new HashSet<SelectListItem>();
+                foreach (var d in ViewBag.Departments)
+                {
+                    departmentsList.Add(new SelectListItem { Text = string.Format((string)"{0}", (object)d.Name), Value = string.Format((string)"{0}", (object)d.Id), Selected = false });
+                }
+            }
+            @Html.DropDownListFor(m => m.DepartmentId, departmentsList)
+        </div>
+        <div>
+            <input type="submit" value="Добави Поднаправление" />
+        </div>
+    </div>
+}

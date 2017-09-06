@@ -1,0 +1,28 @@
+﻿@model SpecialtySelector.Models.Departments.UpdateDepartment
+    
+@{
+    ViewBag.Name = "Обновяване";
+}
+
+@using (Html.BeginForm("Update", "Department", FormMethod.Post))
+{
+    <div class="row text-center">
+        <p class="lead">Име:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Описание на направлението:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Description, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { rows = "10", cols = "1200" })
+        </div>
+        <div>
+            <input class="btn btn-success" type="submit" value="Обнови" />
+        </div>
+    </div>
+}

@@ -1,0 +1,38 @@
+﻿@model SpecialtySelector.Models.Specialties.SpecialtyInfo
+@using SpecialtySelector.Data.SpecialtySelectorEnums
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+
+@{
+    ViewBag.Title = "Детайли";
+}
+
+<div class="jumbotron text-center lead">
+    <div style="word-wrap: break-word">
+        @{ 
+            var modelEqd = Model.Eqd;
+            var displayEqd = modelEqd
+                .GetType()
+                .GetMember(Model.Eqd.ToString())
+                .FirstOrDefault()
+                .GetCustomAttribute<DisplayAttribute>()
+                .GetName();
+
+            var modelFormOfEducation = Model.FormOfEducation;
+            var displayFormOfEducation = modelFormOfEducation
+                .GetType()
+                .GetMember(Model.FormOfEducation.ToString())
+                .FirstOrDefault()
+                .GetCustomAttribute<DisplayAttribute>()
+                .GetName();
+
+        }
+        <h1>@Model.Name - @displayEqd - @displayFormOfEducation</h1>
+    </div>
+    <div style="word-wrap: break-word">
+        <p class="lead"></p>
+    </div>
+    <p>
+        <a class="btn btn-info" href="/Specialty/SpecialtyInfo/@Model.SubDepartmentId">Назад към специалностите</a>
+    </p>
+</div>

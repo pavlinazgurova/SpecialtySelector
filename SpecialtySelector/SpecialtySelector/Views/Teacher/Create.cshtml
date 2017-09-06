@@ -1,0 +1,64 @@
+﻿@using SpecialtySelector.Data.SpecialtySelectorEnums
+@model SpecialtySelector.Models.Teachers.CreateTeacher
+
+@using (Html.BeginForm("Create", "Teacher", FormMethod.Post))
+{
+    <div class="text-center">
+        <p class="lead">Име:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(t => t.FirstName, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(t => t.FirstName, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Презиме:</p>
+        @*<div>
+            @Html.TextBoxFor(t => t.SecondName, new { style = "width:500px;" })
+        </div>*@
+        <p class="lead">Фамилия:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(t => t.LastName, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(t => t.LastName, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Кратко описание:</p>
+        @*<div>
+            @Html.TextBoxFor(t => t.TeacherInfo, new { style = "width:500px;" })
+        </div>*@
+        <p class="lead">Научна степен:</p>
+        <div>
+            @Html.DropDownListFor(t => t.Degree, EnumHelper.GetSelectList(typeof(Degree)))
+        </div>
+        <p class="lead">Академична титла:</p>
+        <div>
+            @Html.DropDownListFor(t => t.AcademicTitle, EnumHelper.GetSelectList(typeof(AcademicTitle)))
+        </div>
+        @*<p class="lead">Връзка с предмети:</p>
+        <div>
+            <div class="lead">
+                @Html.ValidationMessageFor(m => m.Subjects, "", new { style = "color:red" })
+            </div>
+            
+        </div>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Subjects, "", new { style = "color:red" })
+        </div>*@
+        <div>
+            @{
+                var subDepartmentList = new HashSet<SelectListItem>();
+                foreach (var sd in ViewBag.Subjects)
+                {
+                    subDepartmentList.Add(new SelectListItem { Text = string.Format((string)"{0}", (object)sd.Name), Value = string.Format((string)"{0}", (object)sd.Id), Selected = false });
+                }
+            }
+            @Html.DropDownListFor(m => m.Subject, subDepartmentList, new { @multiple = "true"})
+        </div>
+        <br />
+  
+
+        <div>
+            <input type="submit" value="Добави преподавател" />
+        </div>
+    //</div>
+}

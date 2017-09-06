@@ -1,0 +1,56 @@
+﻿@using SpecialtySelector.Data.SpecialtySelectorEnums
+@using SpecialtySelector.Data
+@model SpecialtySelector.Models.Specialties.UpdateSpecialty
+
+@using (Html.BeginForm("Update", "Specialty", FormMethod.Post))
+{
+    <div class="row text-center">
+        <p class="lead">Име на специалността:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Name, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Описание на специалността:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Description, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { rows = "10", cols = "1200" })
+        </div>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.SubDepartmentId, "", new { style = "color:red" })
+        </div>
+        <p class="lead">Образователно-квалификационна степен:</p>
+        <div>
+            @Html.ValidationMessageFor(m => m.Eqd, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.DropDownListFor(m => m.Eqd, EnumHelper.GetSelectList(typeof(Eqd)))
+        </div>
+        <p class="lead">Форма на обучение:</p>
+        <div>
+            @Html.ValidationMessageFor(m => m.FormOfEducation, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.DropDownListFor(m => m.FormOfEducation, EnumHelper.GetSelectList(typeof(FormOfEducation)))
+        </div>
+        <p class="lead">Връзка с поднаправление:</p>
+        <div>
+            @{
+                var options = new HashSet<SelectListItem>();
+                var db = new SpecialtySelectorDbContext();
+                var subDepartments = db.SubDepartments.ToList();
+                foreach (var subDepartment in subDepartments)
+                {
+                    options.Add(new SelectListItem { Text = $"{subDepartment.Name}", Value = $"{subDepartment.Id}", Selected = false });
+                }
+            }
+            @Html.DropDownListFor(m => m.SubDepartmentId, options)
+        </div>
+        <div>
+            <input class="btn btn-success" type="submit" value="Обнови" />
+        </div>
+    </div>
+                }
