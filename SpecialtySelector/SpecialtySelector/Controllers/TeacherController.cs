@@ -142,7 +142,8 @@
             using (var db = new SpecialtySelectorDbContext())
             {
                 var teacher = db.Teachers.Find(id);
-               
+                var adminId = this.User.Identity.GetUserId();
+
                 var teacherViewModel = new UpdateTeacher
                 {
                     Id = teacher.Id,
@@ -152,7 +153,7 @@
                     TeacherInfo = teacher.TeacherInfo,
                     Degree = teacher.Degree,
                     AcademicTitle = teacher.AcademicTitle,
-                    AdminId = teacher.AdminId,
+                    AdminId = adminId,
                     Subjects = teacher.Subjects
                 };
 
@@ -170,7 +171,16 @@
                 {
                     var teachers = db.Teachers.
                         Find(updateTeacher.Id);
-                   
+                    var adminId = this.User.Identity.GetUserId();
+                    var subnew = new List<Subject>();
+
+                    foreach (var kvp in updateTeacher.Subject)
+                    {
+                        var asd = db.Subjects.FirstOrDefault(x => x.Id == kvp);
+                        subnew.Add(asd);
+                    }
+
+                    teachers.AdminId = adminId;
                     teachers.FirstName = updateTeacher.FirstName;
                     teachers.SecondName = updateTeacher.SecondName;
                     teachers.LastName = updateTeacher.LastName;
@@ -178,7 +188,7 @@
                     teachers.Degree = updateTeacher.Degree;
                     teachers.AcademicTitle = updateTeacher.AcademicTitle;
                     teachers.FiredOn = updateTeacher.FiredOn;
-                    teachers.Subjects = updateTeacher.Subjects;
+                    teachers.Subjects = subnew;
 
                     db.SaveChanges();
                 }
