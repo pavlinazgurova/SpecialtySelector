@@ -29,15 +29,17 @@
                     .GetName();
             }
             <h1 style="word-wrap: break-word">@displayAcademicTitle @displayDegree @t.FirstName @t.LastName</h1>
-            @if (t.TeacherInformation.Length < 200)
+            @if (t.TeacherInformation != null)
             {
-                <h3 style="word-wrap: break-word">@t.TeacherInformation</h3>
-            }
-            else
-            {
-                <h3 style="word-wrap: break-word">@t.TeacherInformation.Substring(0, 200)...</h3>
-            } 
-            <p>
+                if (t.TeacherInformation.Length < 200)
+                {
+                    <h3 style="word-wrap: break-word">@t.TeacherInformation</h3>
+                }
+                else
+                {
+                    <h3 style="word-wrap: break-word">@t.TeacherInformation.Substring(0, 200)...</h3>
+                }
+            }            
                 <a class="btn btn-info" href="\">Назад</a>
                 <a class="btn btn-info" href="/Teacher/Details/@t.Id">Виж повече</a>
                 <a class="btn btn-info" href="/Subject/SubjectInfo/@t.Id">Виж предмети</a>
@@ -59,8 +61,9 @@
                         </div>
                     }
                 }
-            </p>
+
         </div>
+
                         }
                     }
                     else

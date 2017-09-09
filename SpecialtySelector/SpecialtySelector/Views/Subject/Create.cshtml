@@ -1,5 +1,9 @@
 ﻿@model SpecialtySelector.Models.Subjects.CreateSubject
 
+@{
+    ViewBag.Title = "Създаване на предмет";
+}
+
 @using (Html.BeginForm("Create", "Subject", FormMethod.Post))
 {
     <div class="text-center">

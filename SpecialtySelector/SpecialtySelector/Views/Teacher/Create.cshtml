@@ -1,6 +1,10 @@
 ﻿@using SpecialtySelector.Data.SpecialtySelectorEnums
 @model SpecialtySelector.Models.Teachers.CreateTeacher
 
+@{ 
+    ViewBag.Title = "Създаване на преподавател";
+}
+
 @using (Html.BeginForm("Create", "Teacher", FormMethod.Post))
 {
     <div class="text-center">
@@ -12,9 +16,9 @@
             @Html.TextBoxFor(t => t.FirstName, new { style = "width:500px;" })
         </div>
         <p class="lead">Презиме:</p>
-        @*<div>
+        <div>
             @Html.TextBoxFor(t => t.SecondName, new { style = "width:500px;" })
-        </div>*@
+        </div>
         <p class="lead">Фамилия:</p>
         <div class="lead">
             @Html.ValidationMessageFor(t => t.LastName, "", new { @style = "color:red" })
@@ -23,9 +27,9 @@
             @Html.TextBoxFor(t => t.LastName, new { style = "width:500px;" })
         </div>
         <p class="lead">Кратко описание:</p>
-        @*<div>
-            @Html.TextBoxFor(t => t.TeacherInfo, new { style = "width:500px;" })
-        </div>*@
+        <div>
+            @Html.TextAreaFor(t => t.TeacherInfo, new { style = "width:500px;" })
+        </div>
         <p class="lead">Научна степен:</p>
         <div>
             @Html.DropDownListFor(t => t.Degree, EnumHelper.GetSelectList(typeof(Degree)))
@@ -44,6 +48,10 @@
         <div class="lead">
             @Html.ValidationMessageFor(m => m.Subjects, "", new { style = "color:red" })
         </div>*@
+        <p class="lead">Връзка с предмети:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Subject, "", new { style = "color:red" })
+        </div>
         <div>
             @{
                 var subDepartmentList = new HashSet<SelectListItem>();
@@ -60,5 +68,5 @@
         <div>
             <input type="submit" value="Добави преподавател" />
         </div>
-    //</div>
+    </div>
 }

@@ -6,7 +6,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class TeacherInfo
+    public class AllTeachers
     {
         public int Id { get; set; }
 
@@ -29,5 +29,7 @@
         public List<int> Subject { get; set; }
 
         public ICollection<Subject> Subjects { get; set; }
+
+        public string AdminId { get; set; }
     }
 }

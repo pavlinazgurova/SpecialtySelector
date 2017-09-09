@@ -242,8 +242,10 @@
     <Compile Include="Models\SubDepartment\SubDepartmentInfo.cs" />
     <Compile Include="Models\SubDepartment\UpdateSubDepartment.cs" />
     <Compile Include="Models\Subjects\CreateSubject.cs" />
+    <Compile Include="Models\Teachers\AllTeachers.cs" />
     <Compile Include="Models\Teachers\CreateTeacher.cs" />
     <Compile Include="Models\Teachers\TeacherInfo.cs" />
+    <Compile Include="Models\Teachers\UpdateTeacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -330,6 +332,8 @@
     <Content Include="Views\Specialty\Update.cshtml" />
     <Content Include="Views\Teacher\TeacherInfo.cshtml" />
     <Content Include="Views\Teacher\Details.cshtml" />
+    <Content Include="Views\Teacher\Update.cshtml" />
+    <Content Include="Views\Teacher\AllTeachers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

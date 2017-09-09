@@ -1,6 +1,10 @@
 ﻿@using SpecialtySelector.Data.SpecialtySelectorEnums
 @model SpecialtySelector.Models.Specialties.CreateSpecialty
 
+@{
+    ViewBag.Title = "Създаване на специалност";
+}
+
 @using (Html.BeginForm("Create", "Specialty", FormMethod.Post))
 {
     <div class="text-center">

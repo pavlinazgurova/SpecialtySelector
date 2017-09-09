@@ -2,6 +2,10 @@
 @using SpecialtySelector.Data
 @model SpecialtySelector.Models.Specialties.UpdateSpecialty
 
+@{
+    ViewBag.Title = "Редактиране";
+}
+
 @using (Html.BeginForm("Update", "Specialty", FormMethod.Post))
 {
     <div class="row text-center">

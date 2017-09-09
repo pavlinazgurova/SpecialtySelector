@@ -1,0 +1,73 @@
+﻿@using SpecialtySelector.Data.SpecialtySelectorEnums
+@using SpecialtySelector.Data
+@model SpecialtySelector.Models.Teachers.UpdateTeacher
+
+@{
+    ViewBag.Title = "Редактиране";
+}
+
+@using (Html.BeginForm("Update", "Teacher", FormMethod.Post))
+{
+    <div class="row text-center">
+        <p class="lead">Име:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.FirstName, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.FirstName, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Презиме:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.SecondName, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.SecondName, new { rows = "10", cols = "1200" })
+        </div>
+        <p class="lead">Фамилия:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.LastName, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.LastName, new { style = "width:500px;" })
+        </div>
+        <p class="lead">Описание:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.TeacherInfo, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.TeacherInfo, new { style = "width:500px;" })
+        </div>
+        <div>
+            @Html.DropDownListFor(m => m.Degree, EnumHelper.GetSelectList(typeof(Degree)))
+        </div>
+        <p class="lead">Форма на обучение:</p>
+        <div>
+            @Html.ValidationMessageFor(m => m.Degree, "", new { @style = "color:red" })
+        </div>
+        <div>
+            @Html.DropDownListFor(m => m.AcademicTitle, EnumHelper.GetSelectList(typeof(AcademicTitle)))
+        </div>
+        <div>
+            @Html.ValidationMessageFor(m => m.AcademicTitle, "", new { @style = "color:red" })
+        </div>
+        <p class="lead">Връзка с предмети:</p>
+        <div class="lead">
+            @Html.ValidationMessageFor(m => m.Subject, "", new { style = "color:red" })
+        </div>
+        <div>
+            @{
+                var options = new HashSet<SelectListItem>();
+                var db = new SpecialtySelectorDbContext();
+                var subjects = db.Subjects.ToList();
+                foreach (var subject in subjects)
+                {
+                    options.Add(new SelectListItem { Text = $"{subject.Name}", Value = $"{subject.Id}", Selected = false });
+                }
+            }
+            @Html.DropDownListFor(m => m.Subject, options, new { @multiple = "true" })
+        </div>
+        <div>
+            <input class="btn btn-success" type="submit" value="Обнови" />
+        </div>
+    </div>
+                }

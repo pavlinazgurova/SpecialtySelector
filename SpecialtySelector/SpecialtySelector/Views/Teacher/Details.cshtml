@@ -9,7 +9,7 @@
 
 <div class="jumbotron text-center lead">
     <div style="word-wrap: break-word">
-        @{ 
+        @{
             var modelDegree = Model.Degree;
             var displayDegree = modelDegree
                 .GetType()
@@ -30,8 +30,19 @@
     </div>
     <div style="word-wrap: break-word">
         <p class="lead">@Model.TeacherInformation</p>
-    </div>    
+    </div>
+    <div>
+        @if (Model.Subjects.Count != 0)
+        {
+            <p class="lead">Предмети:</p>
+            foreach (var sub in Model.Subjects)
+            {
+                <div>@sub.Name</div>
+            }
+        }
+    </div>
+    <br>
     <p>
-        <a class="btn btn-info" href="/Teacher/TeacherInfo/@Model.Id">Назад към преметите</a>
+        <a class="btn btn-info" href="/Teacher/TeacherInfo/@Model.Id">Назад към преподавателите</a>
     </p>
 </div>
