@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     public class UpdateTeacher
     {
         public int Id { get; set; }

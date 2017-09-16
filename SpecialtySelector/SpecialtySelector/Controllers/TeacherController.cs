@@ -29,18 +29,22 @@
         [HttpPost]
         public ActionResult Create(CreateTeacher createTeacher)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && createTeacher != null)
             {
                 using (var db = new SpecialtySelectorDbContext())
                 {
                     var adminId = this.User.Identity.GetUserId();
                     var subnew = new List<Subject>();
 
-                    foreach (var kvp in createTeacher.Subject)
+                    if (createTeacher.Subject != null)
                     {
-                        var asd = db.Subjects.FirstOrDefault(x => x.Id == kvp);
-                        subnew.Add(asd);
+                        foreach (var kvp in createTeacher.Subject)
+                        {
+                            var asd = db.Subjects.FirstOrDefault(x => x.Id == kvp);
+                            subnew.Add(asd);
+                        }
                     }
+                   
                     var teacher = new Teacher()
                     {
                         
@@ -61,11 +65,23 @@
                 }
             }
 
-            return View(createTeacher);
+            using (var db = new SpecialtySelectorDbContext())
+            {
+                var subjects = db.Subjects.ToList();
+
+                ViewBag.Subjects = subjects;
+
+                return View(createTeacher);
+            }
         }
 
-        public ActionResult TeacherInfo(int id)
+        public ActionResult TeacherInfo(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             using (var db = new SpecialtySelectorDbContext())
             {
                 var teachers = db.Teachers
@@ -84,12 +100,22 @@
                     })
                     .ToList();
 
+                if (teachers == null)
+                {
+                    return HttpNotFound();
+                }
+
                 return View(teachers);
             }
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             using (var db = new SpecialtySelectorDbContext())
             {
                 var teachers = db.Teachers.
@@ -118,8 +144,13 @@
         }
 
         [Authorize]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             using (var db = new SpecialtySelectorDbContext())
             {
                 var teacher = db.Teachers.Find(id);
@@ -137,12 +168,22 @@
 
         [Authorize]
         [HttpGet]
-        public ActionResult Update(int id)
+        public ActionResult Update(int? id)
         {
-            using (var db = new SpecialtySelectorDbContext())
+            if (id == null)
             {
+                return HttpNotFound();
+            }
+
+            using (var db = new SpecialtySelectorDbContext())
+            {                
                 var teacher = db.Teachers.Find(id);
                 var adminId = this.User.Identity.GetUserId();
+
+                if (teacher == null)
+                {
+                    return HttpNotFound();
+                }
 
                 var teacherViewModel = new UpdateTeacher
                 {
@@ -174,12 +215,15 @@
                     var adminId = this.User.Identity.GetUserId();
                     var subnew = new List<Subject>();
 
-                    foreach (var kvp in updateTeacher.Subject)
+                    if (updateTeacher.Subject != null)
                     {
-                        var asd = db.Subjects.FirstOrDefault(x => x.Id == kvp);
-                        subnew.Add(asd);
+                        foreach (var kvp in updateTeacher.Subject)
+                        {
+                            var asd = db.Subjects.FirstOrDefault(x => x.Id == kvp);
+                            subnew.Add(asd);
+                        }
                     }
-
+                    
                     teachers.AdminId = adminId;
                     teachers.FirstName = updateTeacher.FirstName;
                     teachers.SecondName = updateTeacher.SecondName;
@@ -217,6 +261,11 @@
                         Subjects = t.Subjects
                     })
                     .ToList();
+
+                if (teachers == null)
+                {
+                    return HttpNotFound();
+                }
 
                 return View(teachers);
             }

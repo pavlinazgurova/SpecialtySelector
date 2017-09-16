@@ -241,7 +241,10 @@
     <Compile Include="Models\SubDepartment\AllSubDepartments.cs" />
     <Compile Include="Models\SubDepartment\SubDepartmentInfo.cs" />
     <Compile Include="Models\SubDepartment\UpdateSubDepartment.cs" />
+    <Compile Include="Models\Subjects\AllSubjects.cs" />
     <Compile Include="Models\Subjects\CreateSubject.cs" />
+    <Compile Include="Models\Subjects\SubjectInfo.cs" />
+    <Compile Include="Models\Subjects\UpdateSubject.cs" />
     <Compile Include="Models\Teachers\AllTeachers.cs" />
     <Compile Include="Models\Teachers\CreateTeacher.cs" />
     <Compile Include="Models\Teachers\TeacherInfo.cs" />
@@ -334,6 +337,10 @@
     <Content Include="Views\Teacher\Details.cshtml" />
     <Content Include="Views\Teacher\Update.cshtml" />
     <Content Include="Views\Teacher\AllTeachers.cshtml" />
+    <Content Include="Views\Subject\AllSubjects.cshtml" />
+    <Content Include="Views\Subject\Details.cshtml" />
+    <Content Include="Views\Subject\SubjectInfo.cshtml" />
+    <Content Include="Views\Subject\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

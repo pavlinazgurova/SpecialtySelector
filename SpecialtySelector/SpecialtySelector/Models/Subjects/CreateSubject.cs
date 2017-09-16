@@ -1,8 +1,8 @@
 ﻿namespace SpecialtySelector.Models.Subjects
 {
+    using SpecialtySelector.Data;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
 
     public class CreateSubject
     {
@@ -10,9 +10,11 @@
         [Display(Name = "Име на предмет:")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Задължително поле")]
         [Display(Name = "Задължителен:")]
         public bool IsMandatory { get; set; }
 
+        [Required(ErrorMessage = "Задължително поле")]
         [Display(Name = "Кредити:")]
         public int Credits { get; set; }
 
@@ -24,8 +26,12 @@
         [Display(Name = "Кратко описание на предмета:")]
         public string Description { get; set; }
 
-        public int? SpecialtyId { get; set; }
+        public List<int> Specialty { get; set; }
+        //fix
+        public ICollection<Specialty> Specialties { get; set; }
 
-        public int? TeacherId { get; set; }
+        public List<int> Teacher { get; set; }
+        //fix
+        public ICollection<Teacher> Teachers { get; set; }
     }
 }

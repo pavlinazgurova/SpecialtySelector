@@ -47,21 +47,34 @@
                 {
                     db.Specialties.Add(specialty);
                     db.SaveChanges();
+
                     var subDepartments = db.SubDepartments.ToList();
                     ViewBag.SubDepartments = subDepartments;
+
                     return RedirectToAction("Details", new { id = specialty.Id });
                 }
             }
 
-            return View(createSpecialty);
-        }
-
-        public ActionResult SpecialtyInfo(int id)
-        {            
             using (var db = new SpecialtySelectorDbContext())
             {
+                var subDepartments = db.SubDepartments.ToList();
 
-                var subDepartments = db.Specialties
+                ViewBag.SubDepartments = subDepartments;
+
+                return View(createSpecialty);
+            }
+        }
+
+        public ActionResult SpecialtyInfo(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            using (var db = new SpecialtySelectorDbContext())
+            {
+                var specialties = db.Specialties
                     .Where(sb => sb.SubDepartmentId == id)
                     .Where(sb => sb.DeletedOn.Equals(null))
                     .Select(sb => new SpecialtyInfo()
@@ -75,12 +88,22 @@
                     })
                     .ToList();
 
-                return View(subDepartments);
+                if (specialties == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(specialties);
             }
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             using (var db = new SpecialtySelectorDbContext())
             {
                 var specialties = db.Specialties
@@ -125,13 +148,23 @@
                     })
                     .ToList();
 
+                if (specialties == null)
+                {
+                    return HttpNotFound();
+                }
+
                 return View(specialties);
             }
         }
 
         [Authorize]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             using (var db = new SpecialtySelectorDbContext())
             {
                 Specialty specialty = db.Specialties.FirstOrDefault(s => s.Id == id);
@@ -149,8 +182,13 @@
 
         [Authorize]
         [HttpGet]
-        public ActionResult Update(int id)
+        public ActionResult Update(int? id)
         {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
             using (var db = new SpecialtySelectorDbContext())
             {
                 var specialty = db.Specialties.Find(id);

@@ -16,7 +16,7 @@
         </div>
         <p class="lead">Задължителен:</p>
         @Html.CheckBoxFor(x => x.IsMandatory)
-      
+
         <p class="lead">Кредити:</p>
         <div>
             @Html.TextBoxFor(m => m.Credits, new { style = "width:500px;" })
@@ -37,9 +37,9 @@
         </div>
         <p class="lead">Връзка със специалност:</p>
         <div class="lead">
-            @Html.ValidationMessageFor(m => m.SpecialtyId, "", new { style = "color:red" })
+            @Html.ValidationMessageFor(m => m.Specialty, "", new { style = "color:red" })
         </div>
-      
+
         <div>
             @{
                 var specialtiesList = new HashSet<SelectListItem>();
@@ -48,10 +48,11 @@
                     specialtiesList.Add(new SelectListItem { Text = string.Format((string)"{0}", (object)sp.Name), Value = string.Format((string)"{0}", (object)sp.Id), Selected = false });
                 }
             }
-            @Html.ListBoxFor(m => m.SpecialtyId, specialtiesList)
+            @Html.ListBoxFor(m => m.Specialty, specialtiesList)
         </div>
+        @*FIX*@ <p class="lead">Връзка с преподавател:</p>        
         <div class="lead">
-            @Html.ValidationMessageFor(m => m.TeacherId, "", new { style = "color:red" })
+            @Html.ValidationMessageFor(m => m.Teacher, "", new { style = "color:red" })
         </div>
         <div>
             @{
@@ -61,7 +62,7 @@
                     teacherList.Add(new SelectListItem { Text = string.Format((string)"{0}", (object)t.FirstName), Value = string.Format((string)"{0}", (object)t.Id), Selected = false });
                 }
             }
-            @Html.ListBoxFor(m => m.TeacherId, teacherList)
+            @Html.ListBoxFor(m => m.Teacher, teacherList)
         </div>
 
         <br />
