@@ -1,0 +1,54 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Diagnostics.Eventing.Reader
+@using System.Reflection
+@model IEnumerable<SpecialtySelector.Models.Subjects.AllSubjects>
+
+@foreach (var s in Model)
+{
+
+    <div class="jumbotron col-md-5 col-md-offset-1 text-center mt-30">
+        <h2 class="lead text-info">
+            Име на предмет: @s.Name
+        </h2>
+        <h3 class="lead">
+            Курс: @s.Course / Кредити: @s.Credits
+        </h3>
+        <h3>
+            Задължителен: @{
+                 //FIX
+                if (s.IsMandatory)
+                {
+                    <span>Да</span>
+                }
+                else
+                {
+                    <span>Не</span>
+                }
+            }
+        </h3>
+        @*@using (Html.BeginForm("Details", "Subject", new { Id = s.Id }, FormMethod.Get))
+        {
+            <input class="btn btn-success" type="submit" value="Виж повече" />
+        }*@
+
+        @{if (Request.IsAuthenticated)
+            {
+                <div class="row">
+                    <div class="col-md-6 text-right">
+                        @using (Html.BeginForm("Delete", "Subject", new { Id = s.Id }, FormMethod.Post))
+                        {
+                            <input class="btn btn-danger" type="submit" value="Изтриване" />
+                        }
+                    </div>
+                    <div class="col-md-6 text-left">
+                        @using (Html.BeginForm("Update", "Subject", new { Id = s.Id }, FormMethod.Get))
+                        {
+                            <input class="btn btn-success" type="submit" value="Редактирай" />
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+                }

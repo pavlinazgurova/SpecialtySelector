@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SpecialtySelector.Models.Subjects.SubjectInfo>
+
+@{
+    ViewBag.Title = "Детайли";
+}
+
+@if (Model.Count() != 0)
+{
+    foreach (var s in Model)
+    {
+        <div class="jumbotron text-center lead text-success mt-20">
+            <h1 style="word-wrap: break-word">@s.Name</h1>
+            @if (s.Description.Length < 200)
+            {
+                <h3 style="word-wrap: break-word">@s.Description</h3>
+            }
+            else
+            {
+                <h3 style="word-wrap: break-word">@s.Description.Substring(0, 200)...</h3>
+            }
+            <p>
+                <a class="btn btn-info" href="\">Назад</a>
+                <a class="btn btn-info" href="/Subject/Details/@s.Id">Виж повече</a>
+                @{if (Request.IsAuthenticated)
+                    {
+                        <div class="row">
+                            <div class="col-md-6 text-right">
+                                @using (Html.BeginForm("Delete", "Subject", new { Id = s.Id }, FormMethod.Post))
+                                {
+                                    <input class="btn btn-danger" type="submit" value="Изтриване" />
+                                }
+                            </div>
+                            <div class="col-md-6 text-left">
+                                @using (Html.BeginForm("Update", "Subject", new { Id = s.Id }, FormMethod.Get))
+                                {
+                                    <input class="btn btn-success" type="submit" value="Редактирай" />
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </p>
+        </div>
+                        }
+                    }
+                    else
+                    {
+                        <h1 class="text-center lead">Все още няма добавени предмети към съответния преподавател....</h1>
+                    }
+

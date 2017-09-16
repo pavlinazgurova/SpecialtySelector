@@ -1,0 +1,96 @@
+﻿@model SpecialtySelector.Models.Subjects.SubjectInfo
+@using SpecialtySelector.Data.SpecialtySelectorEnums
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+
+@{
+    ViewBag.Title = "Детайли";
+}
+
+<div class="jumbotron text-center lead">
+    <div style="word-wrap: break-word">
+        <h2>Име на предмета: @Model.Name</h2>
+        <p>Кредити: @Model.Credits  Курс: @Model.Course</p>
+        <p>
+            Задължителен: @{
+                    //FIX
+                if (Model.IsMandatory)
+                {
+                    <span>Да</span>
+                }
+                else
+                {
+                    <span>Не</span>
+                }
+            }
+        </p>
+    </div>
+    <div>
+        @*FIX*@
+        @if (Model.Specialties.Count != 0)
+        {
+            <div>Предметът се изучава в следните специалности:</div>
+        {
+                foreach (var specialty in Model.Specialties)
+                {
+                    var specialtyEqd = specialty.Eqd;
+                    var displayEqd = specialtyEqd
+                        .GetType()
+                        .GetMember(specialty.Eqd.ToString())
+                        .FirstOrDefault()
+                        .GetCustomAttribute<DisplayAttribute>
+                            ()
+                            .GetName();
+
+                            var SpecialtyFormOfEducation = specialty.FormOfEducation;
+                            var displayFormOfEducation = SpecialtyFormOfEducation
+                            .GetType()
+                            .GetMember(specialty.FormOfEducation.ToString())
+                            .FirstOrDefault()
+                            .GetCustomAttribute<DisplayAttribute>
+                                ()
+                                .GetName();
+
+                                <p>@specialty.Name (@displayEqd / @displayFormOfEducation)</p>
+                                }
+                                }
+                                }
+
+                    </div>
+
+                    <div>
+                        @*FIX*@
+    @if (Model.Teachers.Count != 0)
+    {
+        <div>Преподаватели:</div>
+        foreach(var teacher in Model.Teachers)
+                                {
+            var teacherAcademicTitle = teacher.AcademicTitle;
+            var academicTitle = teacherAcademicTitle
+                .GetType()
+                .GetMember(teacher.AcademicTitle.ToString())
+                .FirstOrDefault()
+                .GetCustomAttribute<DisplayAttribute>
+                    ()
+                    .GetName();
+
+                    var teacherDegree = teacher.Degree;
+                    var degree = teacherDegree
+                    .GetType()
+                    .GetMember(teacher.Degree.ToString())
+                    .FirstOrDefault()
+                    .GetCustomAttribute<DisplayAttribute>
+                        ()
+                        .GetName();
+                        <p>@academicTitle @degree @teacher.FirstName @teacher.LastName</p>
+                        }
+                        }
+
+            </div>
+                    <div>
+                        <div class="lead">@Model.Description</div>
+                    </div>
+
+
+                </div>
+

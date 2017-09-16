@@ -110,6 +110,11 @@
                     })
                     .ToList();
 
+                if (subjects == null)
+                {
+                    return HttpNotFound();
+                }
+
                 return View(subjects);
             }
         }

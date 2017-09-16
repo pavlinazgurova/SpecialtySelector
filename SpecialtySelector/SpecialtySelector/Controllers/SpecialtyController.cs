@@ -193,6 +193,11 @@
             {
                 var specialty = db.Specialties.Find(id);
 
+                if (specialty == null)
+                {
+                    return HttpNotFound();
+                }
+
                 var specialtyViewModel = new UpdateSpecialty
                 {
                     Id = specialty.Id,

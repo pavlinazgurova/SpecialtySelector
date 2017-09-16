@@ -154,6 +154,11 @@ namespace SpecialtySelector.Controllers
                 var subDepartment = db.SubDepartments
                     .Find(id);
 
+                if (subDepartment == null)
+                {
+                    return HttpNotFound();
+                }
+
                 var subDepartmentViewModel = new UpdateSubDepartment
                 {
                     Id = subDepartment.Id,

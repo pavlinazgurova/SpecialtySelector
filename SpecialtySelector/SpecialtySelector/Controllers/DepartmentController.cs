@@ -106,6 +106,11 @@ namespace SpecialtySelector.Controllers
                 var department = db.Departments
                     .Find(id);
 
+                if (department == null)
+                {
+                    return HttpNotFound();
+                }
+
                 var departmentViewModel = new UpdateDepartment
                 {
                     Id = department.Id,
@@ -113,6 +118,8 @@ namespace SpecialtySelector.Controllers
                     Description = department.Description,
                     AdminId = department.AdminId
                 };
+
+                
 
                 return View(departmentViewModel);
             }
